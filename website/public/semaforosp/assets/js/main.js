@@ -23,18 +23,18 @@ var lights = L.geoJson(null, {
         iconAnchor: [12, 28],
         popupAnchor: [0, -25]
       }),
-      title: feature.properties.NAME,
+      title: "Semáforo",
       riseOnHover: true
     });
   },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
-      var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.NAME + "</td></tr>" + "<tr><th>Phone</th><td>" + feature.properties.TEL + "</td></tr>" + "<tr><th>Address</th><td>" + feature.properties.ADDRESS1 + "</td></tr>" + "<tr><th>Website</th><td><a class='url-break' href='" + feature.properties.URL + "' target='_blank'>" + feature.properties.URL + "</a></td></tr>" + "<table>";
+      var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Local:</th><td>" + feature.properties.local + "</td></tr>" +  + "<table>";
 
       if (document.body.clientWidth <= 767) {
         layer.on({
           click: function (e) {
-            $("#feature-title").html(feature.properties.NAME);
+            $("#feature-title").html("Semáforo");
             $("#feature-info").html(content);
             $("#featureModal").modal("show");
           }
@@ -47,7 +47,7 @@ var lights = L.geoJson(null, {
         });
       }
       theaterSearch.push({
-        name: layer.feature.properties.NAME,
+        name: layer.feature.properties.local,
         source: "Theaters",
         id: L.stamp(layer),
         lat: layer.feature.geometry.coordinates[1],
@@ -56,8 +56,30 @@ var lights = L.geoJson(null, {
     }
   }
 });
-$.getJSON("data/lights.geojson", function (data) {
-  lights.addData(data);
+$.getJSON("data/lights.json", function (data) {
+	var i;
+	var geodata = {
+		type: "FeatureCollection",
+		features: []
+	};
+	
+	for(i=0; i<200; i++)
+	{
+		var feat = {
+			type: "Feature",
+			id: data[i].id,
+			properties: {
+					local: data[i].local
+				},
+			geometry: {
+				type: "Point",
+				coordinates: [ data[i].longitude, data[i].latitude ]
+			}
+		};
+		geodata.features.push(feat);
+	}
+	
+  lights.addData(geodata);
 });
 
 
