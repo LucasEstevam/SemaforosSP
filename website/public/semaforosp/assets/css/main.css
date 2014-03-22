@@ -95,6 +95,7 @@ input[type="radio"], input[type="checkbox"] {
   top: 5px;
   background: transparent;
 }
+
 @media (max-width: 992px) {
   .navbar .navbar-brand {
     font-size: 18px;
@@ -116,4 +117,14 @@ input[type="radio"], input[type="checkbox"] {
   .leaflet-control-container {
     display: none !important;
   }
+}
+
+#featureModal {
+transform: translate(0, 40%) !important;
+-ms-transform: translate(0, 40%) !important; /* IE 9 */
+-webkit-transform: translate(0, 40%) !important; /* Safari and Chrome */
+}
+
+.modal {
+  overflow-y: auto;
 }
