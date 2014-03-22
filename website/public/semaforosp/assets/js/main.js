@@ -29,9 +29,19 @@ var tileLayer =  L.tileLayer('https://{s}.tiles.mapbox.com/v3/hckluke.hj71k342/{
 /* Overlay Layers */
 var lights = L.geoJson(null, {
   pointToLayer: function (feature, latlng) {
+    var img = "assets/img/lightsfullarrow.png";
+    if(feature.properties.hasFalha)
+    { 
+      img = "assets/img/lightsfullarrowred.png"
+    }else if(feature.properties.hasOcorrencia)
+    {
+    img = "assets/img/lightsfullarroworange.png"
+    }
+
+
     return L.marker(latlng, {
       icon: L.icon({
-        iconUrl: "assets/img/lightsfullarrow.png",
+        iconUrl: img,
         iconSize: [24, 28],
         iconAnchor: [12, 28],
         popupAnchor: [0, -25]
@@ -124,7 +134,9 @@ $.getJSON("http://54.207.15.65/semaforos", function (data) {
 			type: "Feature",
 			id: data[i].id,
 			properties: {
-					local: data[i].local
+					local: data[i].local,
+          hasFalha: (data[i].falha > 0),
+          hasOcorrencia: (data[i].ocorrencia>0)
 				},
 			geometry: {
 				type: "Point",
