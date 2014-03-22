@@ -1,5 +1,20 @@
 var map, lightsSearch = [];
 
+var tableLangSettings = {
+          sLengthMenu: "Mostrar _MENU_ items por página",
+          sZeroRecords: "Nada encontrado",
+          sInfo: "Mostrando de _START_ a _END_ de _TOTAL_ items",
+          sInfoEmpty: "Mostrando de 0 a 0 de 0 items",
+          sInfoFiltered: "(filtrado de _MAX_ items)",
+          sSearch: "Pesquisar",
+          oPaginate: {
+            sFirst: "Primeiro",
+            sLast: "Último",
+            sNext: "Próximo",
+            sPrevious: "Anterior"
+          }
+        };
+
 /* Basemap Layers */
 
 var apikey = "7a6596460130463c9d2a7f3ba1404dc9";
@@ -34,16 +49,40 @@ var lights = L.geoJson(null, {
           click: function (e) {
             $("#alert-light-btn").button('reset');
             $("#alert-light-msg-content").html("");
+            $("#light-data").html("Carregando informações...");
             $("#alert-light-msg").removeClass("alert-success alert-danger");
             $("#feature-title").html("Semáforo");
             $("#feature-info").html(content);
             $("#featureModal").modal("show");
+            var param = {id: feature.id };
+
+            var tableOptions = {
+                  oLanguage:tableLangSettings,     
+                      aoColumns: [        
+                        {mData: "data_abertura", sTitle: "Abertura" },
+                        {mData: "data_encerramento", sTitle: "Encerramento" },
+                        {mData: "nome", sTitle: "Falha" }
+                        ],    
+                  bJQueryUI: true,
+                  bDestroy: true,
+                  bProcessing: true
+              }
+
+            $.post("http://54.207.15.65/semaforos", param,function(data)
+            {
+                var tablehtml = "<div class=\"table-responsive\"><table id=\"light-ocorrencia-table\" class=\"table table-stripped table-bordered table-condensed\"></table></div>"
+                tableOptions.aaData = data.falhas;
+                $("#light-data").html(tablehtml);
+                var dataTable = $("#light-ocorrencia-table").dataTable(tableOptions);
+
+            });
+
             $("#alert-light-btn").click(function()
                {
                   var btn = $(this);
                   btn.button('loading');
-                  var data = {id: feature.id };
-                  $.post("http://54.207.15.65/semaforos/getOcorrencia",data).always(function() 
+                  
+                  $.post("http://54.207.15.65/semaforos/getOcorrencia",param).always(function() 
                   {
                       btn.button('reset');
                   }).done(function()

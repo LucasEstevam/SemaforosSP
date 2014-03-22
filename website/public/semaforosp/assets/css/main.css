@@ -119,16 +119,6 @@ input[type="radio"], input[type="checkbox"] {
   }
 }
 
-#featureModal {
-transform: translate(0, 40%) !important;
--ms-transform: translate(0, 40%) !important; /* IE 9 */
--webkit-transform: translate(0, 40%) !important; /* Safari and Chrome */
-}
-
-.modal {
-  overflow-y: auto;
-}
-
 .alert-light {
   margin-top: 5px;
 

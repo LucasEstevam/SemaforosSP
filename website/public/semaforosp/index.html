@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="assets/css/main.css">
    <link rel="stylesheet" href="assets/leaflet-0.7.2/markercluster/MarkerCluster.css">
    <link rel="stylesheet" href="assets/leaflet-0.7.2/markercluster/MarkerCluster.Default.css">
-
+  <link rel="stylesheet" href="assets/datatables/dataTables.bootstrap.css">
 
     <link rel="apple-touch-icon" href="assets/img/favicon-152.png">
     <link rel="shortcut icon" sizes="196x196" href="assets/img/favicon-196.png">
@@ -111,7 +111,7 @@
 
    
     <div class="modal fade" id="featureModal" tabindex="-1" role="dialog">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
             <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -128,7 +128,17 @@
             <br/>
             <div class="alert alert-light fade in" id="alert-light-msg">             
                <div id="alert-light-msg-content"></div>
-             </div>
+            </div>
+
+            <div id="light-data">
+              Carregando informações...
+              <div class="table-responsive">
+                <table class="table table-stripped table-bordered table-condensed">
+
+                </table>
+              </div>
+
+            </div>
 
           </center>
           </div>
@@ -142,6 +152,10 @@
     <script src="assets/leaflet-0.7.2/leaflet.js"></script>
      <script src="assets/leaflet-0.7.2/markercluster/leaflet.markercluster.js"></script>
     <script src="assets/leaflet-sidebar/L.Control.Sidebar.js"></script>
+     <script src="assets/datatables/jquery.dataTables.min.js"></script>
+    <script src="assets/datatables/dataTables.bootstrap.js"></script>
+
+
     <script src="assets/js/main.js"></script>
  
 
