@@ -32,6 +32,9 @@ var lights = L.geoJson(null, {
     
         layer.on({
           click: function (e) {
+            $("#alert-light-btn").button('reset');
+            $("#alert-light-msg-content").html("");
+            $("#alert-light-msg").removeClass("alert-success alert-danger");
             $("#feature-title").html("Semáforo");
             $("#feature-info").html(content);
             $("#featureModal").modal("show");
@@ -39,6 +42,20 @@ var lights = L.geoJson(null, {
                {
                   var btn = $(this);
                   btn.button('loading');
+                  var data = {id: feature.id };
+                  $.post("http://54.207.15.65/semaforos/getOcorrencia",data).always(function() 
+                  {
+                      btn.button('reset');
+                  }).done(function()
+                  {
+                    $("#alert-light-msg").addClass("alert-success");
+                    $("#alert-light-msg-content").html("Problema comunicado com sucesso!");
+                  }).fail(function()
+                  {
+               
+                    $("#alert-light-msg").addClass("alert-danger");
+                    $("#alert-light-msg-content").html("Falha na comunicação do problema!");
+                  });
 
                });
           }
@@ -109,6 +126,28 @@ var baseLayers = {
 $("#searchbox").click(function () {
   $(this).select();
 });
+
+var sidebar1 = L.control.sidebar("sidebar1", {
+  closeButton: true,
+  position: "left"
+}).addTo(map);
+
+var sidebar2 = L.control.sidebar("sidebar2", {
+  closeButton: true,
+  position: "left"
+}).addTo(map);
+
+var sidebar1thing = function()
+{
+  sidebar2.hide();
+  sidebar1.toggle();
+}
+
+var sidebar2thing = function()
+{
+  sidebar1.hide();
+  sidebar2.toggle();
+}
 
 /* Typeahead search functionality */
 $(document).one("ajaxStop", function () {

@@ -128,3 +128,8 @@ transform: translate(0, 40%) !important;
 .modal {
   overflow-y: auto;
 }
+
+.alert-light {
+  margin-top: 5px;
+
+}

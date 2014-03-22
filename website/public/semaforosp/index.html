@@ -42,17 +42,28 @@
       <div class="navbar-collapse collapse">
         <form class="navbar-form navbar-right" role="search">
           <div class="form-group has-feedback navbar-right">
-              <input id="searchbox" type="text" size=60 placeholder="Procurar" class="form-control">
+              <input id="searchbox" type="text" size=100 placeholder="Procurar" class="form-control">
               <span id="searchicon" class="fa fa-search form-control-feedback"></span>
           </div>
         </form>
         <ul class="nav navbar-nav">
-          <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="$('#aboutModal').modal('show'); return false;"><i class="fa fa-question-circle" style="color: white"></i>&nbsp;&nbsp;Sobre</a></li>          
+          <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="$('#aboutModal').modal('show'); return false;"><i class="fa fa-question-circle" style="color: white"></i>&nbsp;&nbsp;Sobre</a></li>      
+           <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="sidebar1thing(); return false;"><i class="fa fa-list" style="color: white"></i>&nbsp;&nbsp;Problemas</a></li>
+             <li><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in" onclick="sidebar2thing(); return false;"><i class="fa fa-list" style="color: white"></i>&nbsp;&nbsp;Estatísticas</a></li>
+
         </ul>
       </div><!--/.navbar-collapse -->
     </div>
 
     <div id="map"></div>
+
+    <div id="sidebar1">
+      <p>test</p>
+    </div>
+
+    <div id="sidebar2">
+      <p>test2</p>
+    </div>
 
     <div id="loading">
       <div class="loading-indicator">
@@ -108,11 +119,17 @@
           </div>
           <div class="modal-body">
             <div id = "feature-info"></div>
-            <br>
+            <br/>
             <center>
+
             <button type="button" id="alert-light-btn" data-loading-text="Enviando..." class="btn btn-danger">
               Comunicar problema
             </button>
+            <br/>
+            <div class="alert alert-light fade in" id="alert-light-msg">             
+               <div id="alert-light-msg-content"></div>
+             </div>
+
           </center>
           </div>
         </div><!-- /.modal-content -->
