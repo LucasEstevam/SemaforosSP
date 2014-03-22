@@ -53,14 +53,7 @@
     </div>
 
     <div id="map"></div>
-    <div id="sidebar">
-      <h2>leaflet-sidebar</h2>
-      <p>A <a href="https://github.com/turbo87/leaflet-sidebar/">responsive sidebar plugin</a> for <a href="http://leafletjs.com/">Leaflet</a>, a JS library for interactive maps.</p>
-      <p class="lorem">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-      <p class="lorem">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-      <p class="lorem">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-      <p class="lorem">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-    </div>
+
     <div id="loading">
       <div class="loading-indicator">
         <div class="progress progress-striped active">
@@ -96,7 +89,7 @@
               </div>
               
               <div class="tab-pane fade" id="contact">
-               <p>Semáforos SP foi desenvolvido por Gabriel Pérgola e Lucas Estevam. Entre em contato conosco pelo e-mail: semaforossp@gmail.com. </p>
+               <p>Semáforos SP foi desenvolvido por Gabriel Pérgola e Lucas Estevam. </p><p>Entre em contato conosco pelo e-mail: <a href="mailto:semaforossp@gmail.com">semaforossp@gmail.com</a>. </p>
               </div>
              
             </div>
@@ -105,48 +98,7 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
-    <div class="modal fade" id="legendModal" tabindex="-1" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Map Legend</h4>
-          </div>
-          <div class="modal-body">
-            <p>Map Legend goes here...</p>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">Login</h4>
-          </div>
-          <div class="modal-body">
-            <form id="contact-form">
-              <fieldset>
-                <div class="form-group">
-                  <label for="name">Username:</label>
-                  <input type="text" class="form-control" id="username">
-                </div>
-                <div class="form-group">
-                  <label for="email">Password:</label>
-                  <input type="password" class="form-control" id="password">
-                </div>
-              </fieldset>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary pull-right" data-dismiss="modal">Login</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
+   
     <div class="modal fade" id="featureModal" tabindex="-1" role="dialog">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -154,7 +106,15 @@
             <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title text-primary" id="feature-title"></h4>
           </div>
-          <div class="modal-body" id="feature-info"></div>
+          <div class="modal-body">
+            <div id = "feature-info"></div>
+            <br>
+            <center>
+            <button type="button" id="alert-light-btn" data-loading-text="Enviando..." class="btn btn-primary">
+              Alertar semáforo com problemas
+            </button>
+          </center>
+          </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->

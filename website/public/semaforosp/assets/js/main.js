@@ -3,13 +3,13 @@ var map, lightsSearch = [];
 /* Basemap Layers */
 
 var apikey = "7a6596460130463c9d2a7f3ba1404dc9";
-var tileLayer = L.tileLayer('http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png',        
-        {
-          attribution: 'asv',
-          key: apikey,
-          styleId: 22677
-        }     
-      );
+
+var tileLayer =  L.tileLayer('https://{s}.tiles.mapbox.com/v3/hckluke.hj71k342/{z}/{x}/{y}.png', 
+      {
+        attribution: 'Mapbox/SemáforosSP'
+      }
+  );
+
 
 /* Overlay Layers */
 var lights = L.geoJson(null, {
@@ -27,23 +27,24 @@ var lights = L.geoJson(null, {
   },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
-      var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Local:</th><td>" + feature.properties.local + "</td></tr>" +  + "<table>";
+      var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Local:</th><td>" + feature.properties.local + "</td></tr><table>";
 
-      if (document.body.clientWidth <= 767) {
+    
         layer.on({
           click: function (e) {
             $("#feature-title").html("Semáforo");
             $("#feature-info").html(content);
             $("#featureModal").modal("show");
+            $("#alert-light-btn").click(function()
+               {
+                  var btn = $(this);
+                  btn.button('loading');
+
+               });
           }
         });
 
-      } else {
-        layer.bindPopup(content, {
-          maxWidth: "auto",
-          closeButton: false
-        });
-      }
+      
       lightsSearch.push({
         name: layer.feature.properties.local,
         source: "Lights",
@@ -103,10 +104,6 @@ var baseLayers = {
 /* Add overlay layers to map after defining layer control to preserver order */
 
 
-var sidebar = L.control.sidebar("sidebar", {
-  closeButton: true,
-  position: "left"
-}).addTo(map);
 
 /* Highlight search box text on click */
 $("#searchbox").click(function () {
