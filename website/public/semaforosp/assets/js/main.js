@@ -1,6 +1,4 @@
-var map, boroughSearch = [],
-    theaterSearch = [],
-    museumSearch = [];
+var map, lightsSearch = [];
 
 /* Basemap Layers */
 
@@ -46,9 +44,9 @@ var lights = L.geoJson(null, {
           closeButton: false
         });
       }
-      theaterSearch.push({
+      lightsSearch.push({
         name: layer.feature.properties.local,
-        source: "Theaters",
+        source: "Lights",
         id: L.stamp(layer),
         lat: layer.feature.geometry.coordinates[1],
         lng: layer.feature.geometry.coordinates[0]
@@ -56,14 +54,14 @@ var lights = L.geoJson(null, {
     }
   }
 });
-$.getJSON("data/lights.json", function (data) {
+$.getJSON("http://54.207.15.65/semaforos", function (data) {
 	var i;
 	var geodata = {
 		type: "FeatureCollection",
 		features: []
 	};
 	
-	for(i=0; i<200; i++)
+	for(i=0; i<data.length; i++)
 	{
 		var feat = {
 			type: "Feature",
@@ -102,14 +100,8 @@ var baseLayers = {
   "Street Map": tileLayer,
 };
 
-var overlays = {
-  "<img src='assets/img/lightsfullarrow.png' width='24' height='28'>&nbsp;Semáforos": lights
-};
-
-var layerControl = L.control.layers(null, overlays, {  collapsed: isCollapsed}).addTo(map);
-
 /* Add overlay layers to map after defining layer control to preserver order */
-map.addLayer(lights);
+
 
 var sidebar = L.control.sidebar("sidebar", {
   closeButton: true,
@@ -124,72 +116,26 @@ $("#searchbox").click(function () {
 /* Typeahead search functionality */
 $(document).one("ajaxStop", function () {
   //map.fitBounds(boroughs.getBounds());
+  var cluster = new L.markerClusterGroup();
+cluster.addLayer(lights);
+
+map.addLayer(cluster);
   $("#loading").hide();
 
-  var boroughsBH = new Bloodhound({
-    name: "Boroughs",
+
+  var lightsBH = new Bloodhound({
+    name: "Lights",
     datumTokenizer: function (d) {
       return Bloodhound.tokenizers.whitespace(d.name);
     },
     queryTokenizer: Bloodhound.tokenizers.whitespace,
-    local: boroughSearch,
+    local: lightsSearch,
     limit: 10
   });
 
-  var theatersBH = new Bloodhound({
-    name: "Theaters",
-    datumTokenizer: function (d) {
-      return Bloodhound.tokenizers.whitespace(d.name);
-    },
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    local: theaterSearch,
-    limit: 10
-  });
+ 
+  lightsBH.initialize();
 
-  var museumsBH = new Bloodhound({
-    name: "Museums",
-    datumTokenizer: function (d) {
-      return Bloodhound.tokenizers.whitespace(d.name);
-    },
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    local: museumSearch,
-    limit: 10
-  });
-
-  var geonamesBH = new Bloodhound({
-    name: "GeoNames",
-    datumTokenizer: function (d) {
-      return Bloodhound.tokenizers.whitespace(d.name);
-    },
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    remote: {
-      url: "http://api.geonames.org/searchJSON?username=bootleaf&featureClass=P&maxRows=5&countryCode=US&name_startsWith=%QUERY",
-      filter: function (data) {
-        return $.map(data.geonames, function (result) {
-          return {
-            name: result.name + ", " + result.adminCode1,
-            lat: result.lat,
-            lng: result.lng,
-            source: "GeoNames"
-          };
-        });
-      },
-      ajax: {
-        beforeSend: function (jqXhr, settings) {
-          settings.url += "&east=" + map.getBounds().getEast() + "&west=" + map.getBounds().getWest() + "&north=" + map.getBounds().getNorth() + "&south=" + map.getBounds().getSouth();
-          $("#searchicon").removeClass("fa-search").addClass("fa-refresh fa-spin");
-        },
-        complete: function (jqXHR, status) {
-          $('#searchicon').removeClass("fa-refresh fa-spin").addClass("fa-search");
-        }
-      }
-    },
-    limit: 10
-  });
-  boroughsBH.initialize();
-  theatersBH.initialize();
-  museumsBH.initialize();
-  geonamesBH.initialize();
 
   /* instantiate the typeahead UI */
   $("#searchbox").typeahead({
@@ -197,62 +143,27 @@ $(document).one("ajaxStop", function () {
     highlight: true,
     hint: false
   }, {
-    name: "Boroughs",
+    name: "Lights",
     displayKey: "name",
-    source: boroughsBH.ttAdapter(),
+    source: lightsBH.ttAdapter(),
     templates: {
-      header: "<h4 class='typeahead-header'>Boroughs</h4>"
-    }
-  }, {
-    name: "Theaters",
-    displayKey: "name",
-    source: theatersBH.ttAdapter(),
-    templates: {
-      header: "<h4 class='typeahead-header'><img src='assets/img/theater.png' width='24' height='28'>&nbsp;Theaters</h4>"
-    }
-  }, {
-    name: "Museums",
-    displayKey: "name",
-    source: museumsBH.ttAdapter(),
-    templates: {
-      header: "<h4 class='typeahead-header'><img src='assets/img/museum.png' width='24' height='28'>&nbsp;Museums</h4>"
-    }
-  }, {
-    name: "GeoNames",
-    displayKey: "name",
-    source: geonamesBH.ttAdapter(),
-    templates: {
-      header: "<h4 class='typeahead-header'><img src='assets/img/globe.png' width='25' height='25'>&nbsp;GeoNames</h4>"
+      header: "<h4 class='typeahead-header'><img src='assets/img/lightsfullarrow.png' width='24' height='28'>&nbsp;Semáforos</h4>"
     }
   }).on("typeahead:selected", function (obj, datum) {
-    if (datum.source === "Boroughs") {
-      map.fitBounds(datum.bounds);
-    }
-    if (datum.source === "Theaters") {
-      if (!map.hasLayer(theaters)) {
-        map.addLayer(theaters);
-      }
+    
+    if (datum.source === "Lights") {      
       map.setView([datum.lat, datum.lng], 17);
       if (map._layers[datum.id]) {
         map._layers[datum.id].fire("click");
       }
     }
-    if (datum.source === "Museums") {
-      if (!map.hasLayer(museums)) {
-        map.addLayer(museums);
-      }
-      map.setView([datum.lat, datum.lng], 17);
-      if (map._layers[datum.id]) {
-        map._layers[datum.id].fire("click");
-      }
-    }
-    if (datum.source === "GeoNames") {
-      map.setView([datum.lat, datum.lng], 14);
-    }
+
     if ($(".navbar-collapse").height() > 50) {
       $(".navbar-collapse").collapse("hide");
     }
-  }).on("typeahead:opened", function () {
+
+    
+    }).on("typeahead:opened", function () {
     $(".navbar-collapse.in").css("max-height", $(document).height() - $(".navbar-header").height());
     $(".navbar-collapse.in").css("height", $(document).height() - $(".navbar-header").height());
   }).on("typeahead:closed", function () {
