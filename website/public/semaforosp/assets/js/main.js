@@ -1,5 +1,10 @@
 var map, lightsSearch = [];
 
+function toTitleCase(str)
+{
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
+
 var tableLangSettings = {
           sLengthMenu: "Mostrar _MENU_ items por página",
           sZeroRecords: "Nada encontrado",
@@ -52,7 +57,7 @@ var lights = L.geoJson(null, {
   },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
-      var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Local:</th><td>" + feature.properties.local + "</td></tr><table>";
+      var content = "<h3>" + toTitleCase(feature.properties.local) + "</h3>";
 
     
         layer.on({
@@ -64,6 +69,27 @@ var lights = L.geoJson(null, {
             $("#feature-title").html("Semáforo");
             $("#feature-info").html(content);
             $("#featureModal").modal("show");
+
+            if(feature.properties.hasFalha)
+            {
+              $("#alert-light-hasfalha").html("Esse semáforo apresenta falhas!")
+              $("#alert-light-hasfalha").addClass("alert-danger alert");
+            }else
+            {
+              $("#alert-light-hasfalha").html("")
+              $("#alert-light-hasfalha").removeClass("alert-danger alert");
+            }
+
+            if(feature.properties.hasOcorrencia)
+            {
+              $("#alert-light-hasocorrencia").html("Foram comunicados problemas com esse semáforo!")
+              $("#alert-light-hasocorrencia").addClass("alert-warning alert");
+            }else
+            {
+              $("#alert-light-hasocorrencia").html("")
+              $("#alert-light-hasocorrencia").removeClass("alert-warning alert");
+            }
+
             var param = {id: feature.id };
 
             var tableOptions = {
@@ -80,7 +106,7 @@ var lights = L.geoJson(null, {
 
             $.post("http://54.207.15.65/semaforos", param,function(data)
             {
-                var tablehtml = "<div class=\"table-responsive\"><table id=\"light-ocorrencia-table\" class=\"table table-stripped table-bordered table-condensed\"></table></div>"
+                var tablehtml = "<div class=\"panel panel-default\"><div class=\"panel-heading\">Histórico de Falhas</div><div class=\"panel-body\"><div class=\"table-responsive\"><table id=\"light-ocorrencia-table\" class=\"table table-stripped table-bordered table-condensed\"></table></div></div></div>"
                 tableOptions.aaData = data.falhas;
                 $("#light-data").html(tablehtml);
                 var dataTable = $("#light-ocorrencia-table").dataTable(tableOptions);
@@ -99,6 +125,23 @@ var lights = L.geoJson(null, {
                   {
                     $("#alert-light-msg").addClass("alert-success");
                     $("#alert-light-msg-content").html("Problema comunicado com sucesso!");
+                    $("#alert-light-hasocorrencia").html("Foram comunicados problemas com esse semáforo!")
+                    $("#alert-light-hasocorrencia").addClass("alert-warning alert");
+                    feature.properties.hasOcorrencia = true;
+                    if(feature.properties.hasFalha)
+                    { 
+                      img = "assets/img/lightsfullarrowred.png"
+                    }else if(feature.properties.hasOcorrencia)
+                    {
+                      img = "assets/img/lightsfullarroworange.png"
+                    }
+                    e.target.setIcon(L.icon({
+                      iconUrl: img,
+                      iconSize: [24, 28],
+                      iconAnchor: [12, 28],
+                      popupAnchor: [0, -25]
+                    }));
+
                   }).fail(function()
                   {
                
