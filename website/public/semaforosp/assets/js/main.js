@@ -250,7 +250,7 @@ var legend2 = L.control({position: 'topright'});
 legend2.onAdd = function(map)
 {
   var div = L.DomUtil.create('div', 'info legend');
-  div.innerHTML = "<center><p><h4>Índice de Disponibilidade: </h4><div class=\"vix\">14.7</div> </p></center>"
+  div.innerHTML = "<center><p><h4>Índice de Disponibilidade: </h4><div class=\"vix\">76%</div> </p></center>"
   return div;
 }
 
