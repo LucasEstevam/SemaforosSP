@@ -16,8 +16,8 @@ http://54.207.52.255:4567/
 
 ### Screenshots:
 
-![Desktop](/screenshots/1/.png)
+![Desktop](/screenshots/1.png)
 
-![Desktop](/screenshots/2/.png)
+![Desktop](/screenshots/2.png)
 
 
