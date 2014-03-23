@@ -1,4 +1,4 @@
-var map, lightsSearch = [];
+var map, lightsSearch = [], totalFalhas, totalOcorrencias;
 
 function toTitleCase(str)
 {
@@ -231,6 +231,17 @@ var baseLayers = {
   "Street Map": tileLayer,
 };
 
+var legend = L.control({position: 'topright'});
+
+legend.onAdd = function(map)
+{
+  var div = L.DomUtil.create('div', 'info legend');
+  div.innerHTML = "<center><p><h4>Ocorrências Reportadas: </h4><div class=\"totalOcorrencias\" id=\"totalOcorrenciasDiv\"></div></p><p><h4>Falhas em Aberto:</h4><div class=\"totalFalhas\" id=\"totalFalhasDiv\"></div></p></center>"
+  return div;
+}
+
+
+legend.addTo(map);
 /* Add overlay layers to map after defining layer control to preserver order */
 
 
@@ -266,11 +277,19 @@ var sidebar2thing = function()
  $.get("http://54.207.15.65/semaforos/ocorrencias",function(data)
             {
                var j;
+               totalOcorrencias = 0;
+
+            
 
                 for(j=0; j<data.length; j++)
                 {
                   data[j].local = toTitleCase(data[j].local);
+                  if(data[j].nroOcorrencias){
+                    totalOcorrencias += parseInt(data[j].nroOcorrencias);
+                  }
                 }
+
+                $("#totalOcorrenciasDiv").html(totalOcorrencias);
                  var tableOptions = {
                   oLanguage:tableLangSettings,     
                       aoColumns: [        
@@ -294,6 +313,8 @@ var sidebar2thing = function()
             {
 
                 var j;
+                totalFalhas = data.length;
+                $("#totalFalhasDiv").html(totalFalhas);
 
                 for(j=0; j<data.length; j++)
                 {
