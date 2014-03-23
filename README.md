@@ -4,9 +4,10 @@ SemaforosSP
 A maior plataforma colaborativa de monitoramento semafórico do mundo.
 
 ### Descrição:
-SemáforosSP é uma plataforma que permite aos usuários colaborar com a manutenção da infraestrutura 
-de trânsito da cidade de São Paulo.
-
+ SemáforosSP é a maior plataforma colaborativa do mundo de monitoramento semafórico. 
+Permite aos usuários colaborar com informações de ocorrências, consultar as falhas registradas pela CET 
+(Companhia de Engenharia de Tráfego de São Paulo), bem como ser notificado se algum semáforo de sua rota 
+mais passa por algum problema, entre outros.
 
 ### Demo:
 http://54.207.52.255:4567/
