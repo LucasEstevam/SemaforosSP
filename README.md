@@ -1,7 +1,7 @@
 SemaforosSP
 ===========
 
-A maior plataforma colaborativa de monitoramento semafôrico do mundo.
+A maior plataforma colaborativa de monitoramento semafórico do mundo.
 
 ### Descrição:
 SemáforosSP é uma plataforma que permite aos usuários colaborar com a manutenção da infraestrutura 
