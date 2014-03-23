@@ -1,0 +1,16 @@
+transito\ContentBundle\Entity\Falha:
+    type: entity
+    table: null
+    repositoryClass: transito\ContentBundle\Entity\FalhaRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        nome:
+            type: string
+            length: 50
+            nullable: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,22 @@
+transito\ContentBundle\Entity\talaoFalha:
+    type: entity
+    table: null
+    repositoryClass: transito\ContentBundle\Entity\talaoFalhaRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        data_abertura:
+            type: datetime
+        data_encerramento:
+            type: datetime
+            nullable: true
+    manyToOne:
+        local:
+          targetEntity: Local
+        falha:
+          targetEntity: Falha
+    lifecycleCallbacks: {  }

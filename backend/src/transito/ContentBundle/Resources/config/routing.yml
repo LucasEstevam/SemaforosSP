@@ -1,0 +1,33 @@
+#transito_content_homepage:
+#    pattern:  /
+#    defaults: { _controller: transitoContentBundle:Default:index }
+
+semaforos:
+    pattern:  /semaforos
+    defaults: { _controller: transitoContentBundle:Default:semaforos, _format: json }
+    methods:  [POST,GET]
+
+distritos:
+    pattern:  /distritos
+    defaults: { _controller: transitoContentBundle:Default:distritos, _format: json }
+
+subprefeituras:
+    pattern:  /subprefeituras
+    defaults: { _controller: transitoContentBundle:Default:subprefeituras, _format: json }
+
+ocorrencias:
+    pattern:  /semaforos/ocorrencias
+    defaults: { _controller: transitoContentBundle:Default:ocorrencias, _format: json }
+
+falhas:
+    pattern:  /semaforos/falhas
+    defaults: { _controller: transitoContentBundle:Default:falhas, _format: json }
+
+todasFalhasEmAberto:
+    pattern:  /semaforos/falhas/abertas
+    defaults: { _controller: transitoContentBundle:Default:todasFalhasEmAberto, _format: json }
+
+getOcorrencia:
+    pattern:  /semaforos/getOcorrencia
+    defaults: { _controller: transitoContentBundle:Default:getOcorrencia }
+    methods:  [POST]

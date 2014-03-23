@@ -1,0 +1,7 @@
+parameters:
+#    transito_content.example.class: transito\ContentBundle\Example
+
+services:
+#    transito_content.example:
+#        class: %transito_content.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

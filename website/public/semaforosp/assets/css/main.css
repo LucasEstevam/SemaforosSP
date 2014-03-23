@@ -157,12 +157,21 @@ input[type="radio"], input[type="checkbox"] {
 
 .totalOcorrencias{
     margin: 0 0 5px;
-    font: 24px Arial, Helvetica, sans-serif;
+    font: 26px Arial, Helvetica, sans-serif;
     color: #FF8000;
+    font-weight:bold;
 }
 
 .totalFalhas{
     margin: 0 0 5px;
-    font: 24px Arial, Helvetica, sans-serif;
+    font: 26px Arial, Helvetica, sans-serif;
     color: #FF0000;
+    font-weight:bold;
+}
+
+.vix{
+    margin: 0 0 5px;
+    font: 26px Arial, Helvetica, sans-serif;
+    color: #01DF01;
+    font-weight:bold;
 }

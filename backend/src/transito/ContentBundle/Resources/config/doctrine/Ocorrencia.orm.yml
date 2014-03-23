@@ -1,0 +1,17 @@
+transito\ContentBundle\Entity\Ocorrencia:
+    type: entity
+    table: null
+    repositoryClass: transito\ContentBundle\Entity\OcorrenciaRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        created_at:
+            type: datetime
+    manyToOne:
+        local:
+          targetEntity: Local
+    lifecycleCallbacks: {  }

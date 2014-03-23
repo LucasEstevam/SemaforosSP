@@ -107,7 +107,8 @@ var lights = L.geoJson(null, {
                   bJQueryUI: true,
                   bDestroy: true,
                   bProcessing: true,
-                  bLengthChange:false
+                  bLengthChange:false,
+                  aaSorting: [[1,"desc"]]
               }
 
             $.post("http://54.207.15.65/semaforos", param,function(data)
@@ -242,6 +243,20 @@ legend.onAdd = function(map)
 
 
 legend.addTo(map);
+
+
+var legend2 = L.control({position: 'topright'});
+
+legend2.onAdd = function(map)
+{
+  var div = L.DomUtil.create('div', 'info legend');
+  div.innerHTML = "<center><p><h4>Índice de Disponibilidade: </h4><div class=\"vix\">14.7</div> </p></center>"
+  return div;
+}
+
+
+legend2.addTo(map);
+
 /* Add overlay layers to map after defining layer control to preserver order */
 
 

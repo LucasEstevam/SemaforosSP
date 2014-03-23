@@ -1,0 +1,29 @@
+transito\ContentBundle\Entity\Local:
+    type: entity
+    table: local
+    repositoryClass: transito\ContentBundle\Entity\LocalRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        local:
+            type: string
+            length: 200
+            nullable: false
+        latitude:
+            type: decimal(18)
+            scale: 12
+            precision: 18
+            nullable: false
+        longitude:
+            type: decimal(18)
+            scale: 12
+            precision: 18
+            nullable: false 
+    manyToOne:
+        distrito:
+          targetEntity: Distrito
+    lifecycleCallbacks: {  }

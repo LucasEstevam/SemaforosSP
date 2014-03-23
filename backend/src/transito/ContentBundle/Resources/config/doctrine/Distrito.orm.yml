@@ -1,0 +1,19 @@
+transito\ContentBundle\Entity\Distrito:
+    type: entity
+    table: null
+    repositoryClass: transito\ContentBundle\Entity\DistritoRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        nome:
+            type: string
+            length: 50
+            nullable: false
+    manyToOne:
+        subprefeitura:
+          targetEntity: subprefeitura
+    lifecycleCallbacks: {  }
