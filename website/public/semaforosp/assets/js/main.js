@@ -5,6 +5,11 @@ function toTitleCase(str)
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
+$('#myTab a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+
 var tableLangSettings = {
           sLengthMenu: "Mostrar _MENU_ items por página",
           sZeroRecords: "Nada encontrado",
@@ -72,7 +77,7 @@ var lights = L.geoJson(null, {
 
             if(feature.properties.hasFalha)
             {
-              $("#alert-light-hasfalha").html("Esse semáforo apresenta falhas!")
+              $("#alert-light-hasfalha").html("Este semáforo apresenta falhas!")
               $("#alert-light-hasfalha").addClass("alert-danger alert");
             }else
             {
@@ -82,7 +87,7 @@ var lights = L.geoJson(null, {
 
             if(feature.properties.hasOcorrencia)
             {
-              $("#alert-light-hasocorrencia").html("Foram comunicados problemas com esse semáforo!")
+              $("#alert-light-hasocorrencia").html("Foram comunicados problemas com este semáforo!")
               $("#alert-light-hasocorrencia").addClass("alert-warning alert");
             }else
             {
@@ -95,17 +100,31 @@ var lights = L.geoJson(null, {
             var tableOptions = {
                   oLanguage:tableLangSettings,     
                       aoColumns: [        
-                        {mData: "data_abertura", sTitle: "Abertura" },
-                        {mData: "data_encerramento", sTitle: "Encerramento" },
-                        {mData: "nome", sTitle: "Falha" }
+                        {mData: "data_abertura", sTitle: "Abertura", sWidth:"20%"},
+                        {mData: "data_encerramento", sTitle: "Encerramento",sWidth:"20%" },
+                        {mData: "nome", sTitle: "Falha",sWidth:"60%" }
                         ],    
                   bJQueryUI: true,
                   bDestroy: true,
-                  bProcessing: true
+                  bProcessing: true,
+                  bLengthChange:false
               }
 
             $.post("http://54.207.15.65/semaforos", param,function(data)
             {
+                var j;
+                for(j = 0; j<data.falhas.length; j++)
+                {
+                    data.falhas[j].nome = toTitleCase(data.falhas[j].nome);
+                    data.falhas[j].data_abertura = moment(data.falhas[j].data_abertura).format('D/M/YYYY h:mm');
+                    if(data.falhas[j].data_encerramento)
+                    {
+                      data.falhas[j].data_encerramento = moment(data.falhas[j].data_encerramento).format('D/M/YYYY h:mm');
+                    }else
+                    {
+                      data.falhas[j].data_encerramento = "Em aberto";
+                    }
+                }
                 var tablehtml = "<div class=\"panel panel-default\"><div class=\"panel-heading\">Histórico de Falhas</div><div class=\"panel-body\"><div class=\"table-responsive\"><table id=\"light-ocorrencia-table\" class=\"table table-stripped table-bordered table-condensed\"></table></div></div></div>"
                 tableOptions.aaData = data.falhas;
                 $("#light-data").html(tablehtml);
@@ -125,7 +144,7 @@ var lights = L.geoJson(null, {
                   {
                     $("#alert-light-msg").addClass("alert-success");
                     $("#alert-light-msg-content").html("Problema comunicado com sucesso!");
-                    $("#alert-light-hasocorrencia").html("Foram comunicados problemas com esse semáforo!")
+                    $("#alert-light-hasocorrencia").html("Foram comunicados problemas com este semáforo!")
                     $("#alert-light-hasocorrencia").addClass("alert-warning alert");
                     feature.properties.hasOcorrencia = true;
                     if(feature.properties.hasFalha)
@@ -242,6 +261,95 @@ var sidebar2thing = function()
   sidebar1.hide();
   sidebar2.toggle();
 }
+
+
+ $.get("http://54.207.15.65/semaforos/ocorrencias",function(data)
+            {
+               var j;
+
+                for(j=0; j<data.length; j++)
+                {
+                  data[j].local = toTitleCase(data[j].local);
+                }
+                 var tableOptions = {
+                  oLanguage:tableLangSettings,     
+                      aoColumns: [        
+                        {mData: "local", sTitle: "Semáforo", sWidth:"80%" },
+                        {mData: "nroOcorrencias", sTitle: "Ocorrências Reportadas", sWidth:"20%"}
+                        ],    
+                  bJQueryUI: true,
+                  bDestroy: true,
+                  bProcessing: true,
+                  bLengthChange:false,
+                  aaData: data,
+                  aaSorting: [[1,"desc"]]
+                  }
+
+                  var dataTable = $("#tab-ocorrencias-table").dataTable(tableOptions);
+
+
+            });
+
+ $.get("http://54.207.15.65/semaforos/falhas/abertas",function(data)
+            {
+
+                var j;
+
+                for(j=0; j<data.length; j++)
+                {
+                  data[j].local = toTitleCase(data[j].local);
+                  data[j].nome = toTitleCase(data[j].nome);
+                }
+
+                 var tableOptions = {
+                  oLanguage:tableLangSettings,     
+                      aoColumns: [        
+                        {mData: "local", sTitle: "Semáforo", sWidth:"80%" },
+                        {mData: "nome", sTitle: "Tipo de Falha", sWidth:"20%"}
+                        ],    
+                  bJQueryUI: true,
+                  bDestroy: true,
+                  bProcessing: true,
+                  bLengthChange:false,
+                  aaData: data
+                  }
+
+                  var dataTable = $("#tab-falhas-table").dataTable(tableOptions);
+
+
+            });
+
+
+  $.get("http://54.207.15.65/semaforos/falhas",function(data)
+            {
+               var j;
+
+                for(j=0; j<data.length; j++)
+                {
+                 data[j].local = toTitleCase(data[j].local);
+                }
+                 var tableOptions = {
+                  oLanguage:tableLangSettings,     
+                      aoColumns: [        
+                        {mData: "local", sTitle: "Semáforo", sWidth:"80%" },
+                        {mData: "nroFalhas", sTitle: "Falhas", sWidth:"20%"}
+                        ],    
+                  bJQueryUI: true,
+                  bDestroy: true,
+                  bProcessing: true,
+                  bLengthChange:false,
+                  aaData: data,
+                  aaSorting: [[1,"desc"]]
+                  }
+
+                  var dataTable = $("#tab-estatisticas-table").dataTable(tableOptions);
+
+
+            });
+
+
+
+
 
 /* Typeahead search functionality */
 $(document).one("ajaxStop", function () {

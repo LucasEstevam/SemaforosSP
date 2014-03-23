@@ -58,11 +58,54 @@
     <div id="map"></div>
 
     <div id="sidebar1">
-      <p>test</p>
+      <ul class="nav nav-tabs" id="myTab">
+        <li class="active">
+          <a href="#ocorr">
+            Ocorrências Reportadas
+          </a>
+        </li>
+        <li>
+          <a href="#falh">
+            Falhas em Aberto
+          </a>
+        </li>
+      </ul>
+
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade active in" id="ocorr">
+
+          <div class="table-responsive">
+            <table id="tab-ocorrencias-table" class="table table-stripped table-bordered table-condensed">
+            </table>
+          </div>
+
+        </div>
+
+        <div class="tab-pane fade" id="falh">
+          <div class="table-responsive">
+            <table id="tab-falhas-table" class="table table-stripped table-bordered table-condensed">
+           </table>
+          </div>
+        </div>
+
+      </div>
+
     </div>
 
     <div id="sidebar2">
-      <p>test2</p>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Semáforos que mais falham
+        </div>
+        <div class="panel-body">
+
+          <div class="table-responsive">
+                <table id="tab-estatisticas-table" class="table table-stripped table-bordered table-condensed">
+                </table>
+          </div>
+
+        </div>
+      </div>
     </div>
 
     <div id="loading">
@@ -144,6 +187,7 @@
     </div><!-- /.modal -->
   
     <script src="assets/js/jquery-1.11.0.min.js"></script>
+    <script src="assets/js/moment-with-langs.js"></script>
     <script src="assets/bootstrap-3.1.1/js/bootstrap.min.js"></script>
     <script src="assets/typeahead/typeahead.bundle.min.js"></script>
     <script src="assets/leaflet-0.7.2/leaflet.js"></script>
